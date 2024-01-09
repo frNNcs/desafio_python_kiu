@@ -5,6 +5,8 @@
         "**/*/__init__.py": true,
         "**/*/__pycache__": true,
         "**/*/venv": true,
+        "**/htmlcov": true,
+        "**/.coverage": true,
     },
     "[python]": {
         "editor.formatOnType": true,
@@ -21,7 +23,7 @@
       "explorer.fileNesting.enabled": true,
       "explorer.fileNesting.expand": false,
       "explorer.fileNesting.patterns": {
-        "main.py": ".flake8, .gitignore, .python-version, .coverage"
+        "main.py": ".flake8, .gitignore, .python-version, .coverage, .coveragerc"
       },
       "explorer.sortOrder": "filesFirst",
       "python.testing.unittestArgs": [
