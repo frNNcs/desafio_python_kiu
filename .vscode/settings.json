@@ -1,0 +1,9 @@
+{
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoImportCompletions": true,
+    "files.exclude": {
+        "**/*/__init__.py": true,
+        "**/*/__pycache__": true,
+        "**/*/venv": true,
+    }
+}
