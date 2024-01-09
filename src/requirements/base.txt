@@ -1,4 +1,4 @@
 coverage==7.4.0
 flake8==7.0.0
-psycopg-binary==3.1.17
+psycopg2==2.9.9
 python-dotenv==1.0.0
