@@ -10,6 +10,8 @@ if __name__ == "__main__":
         is_active=True,
     )
     client.save()
+
+    # -------------------------------
     client2 = Client(
         name="Equipo de desarrollo de la nueva granada",
         email="equipo@nueva_granada.com",
@@ -18,6 +20,8 @@ if __name__ == "__main__":
         is_active=True,
     )
     client2.save()
+
+    # -------------------------------
     package = Package(
         description="Paquete de suministros",
         type_package="Caja",
@@ -27,6 +31,7 @@ if __name__ == "__main__":
     package.save()
     shipment = client.send_package(client2, package)
 
+    # -------------------------------
     print(
         Shipment.get_total_shipments_per_day("2024-01-09"),
         Shipment.get_ammount_per_day("2024-01-09"),
