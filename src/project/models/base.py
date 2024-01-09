@@ -32,6 +32,3 @@ class BaseModel:
             "id": self.id,
             "created_at": self.created_at.strftime("%d-%m-%Y %H:%M:%S"),
         }
-
-    def __iter__(self):
-        return iter(self.__dict__().items())
