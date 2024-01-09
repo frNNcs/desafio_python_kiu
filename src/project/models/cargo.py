@@ -1,5 +1,6 @@
-import datetime
+from datetime import date, datetime
 
+from project.database.connection import conn as Connection
 from project.models.base import BaseModel
 from project.models.client import Client
 
@@ -11,29 +12,47 @@ class Package(BaseModel):
     Model that represents a package
     """
 
+    id: int | None = None
     description: str
     type_package: str
     weight: float
     size: tuple
+    created_at: datetime
 
-    def __init__(self, description: str, type_package: str, weight: float, size: tuple):
-        super().__init__()
+    @classmethod
+    def _table_name(cls):
+        return "packages"
+
+    def __init__(
+        self,
+        description: str,
+        type_package: str,
+        weight: float,
+        size: tuple,
+        id: int | None = None,
+        created_at: datetime | None = None,
+    ):
+        self.id = id
         self.description = description
         self.type_package = type_package
         self.weight = weight
         self.size = size
+        self.created_at = created_at or datetime.now()
 
     def save(self):
         super().save()
 
     def __dict__(self):
-        return {
-            **super().__dict__(),
-            "description": self.description,
-            "type_package": self.type_package,
-            "weight": self.weight,
-            "size": self.size,
-        }
+        return dict(
+            {
+                "id": self.id,
+                "description": self.description,
+                "type_package": self.type_package,
+                "weight": self.weight,
+                "size": self.size,
+                "created_at": self.created_at,
+            }
+        )
 
 
 class SHIPMENT_STATES:
@@ -56,37 +75,82 @@ class SHIPMENT_STATES:
 class Shipment(BaseModel):
     """Model that represents a shipment"""
 
-    source: Client
-    destination: Client
+    id: int | None = None
+    source_id: int
+    destination_id: int
     price: float
     state: str = SHIPMENT_STATES.PICKUP
-    package: Package
+    package_id: int
+    created_at: datetime
+
+    @classmethod
+    def _table_name(cls):
+        return "shipments"
 
     def __init__(
         self,
-        source: Client,
-        destination: Client,
+        source_id: int,
+        destination_id: int,
         price: float,
-        package: Package,
+        package_id: int,
+        state: str = SHIPMENT_STATES.PICKUP,
+        id: int | None = None,
+        created_at: datetime | None = None,
     ):
-        super().__init__()
-        self.source = source
-        self.destination = destination
+        self.id = id
+        self.source_id = source_id
+        self.destination_id = destination_id
         self.price = price
-        self.package = package
+        self.package_id = package_id
+        self.created_at = created_at or datetime.now()
+        self.state = state
+
+    @property
+    def source(self):
+        """Returns the source of the shipment
+
+        Returns:
+            _type_: Client
+        """
+        return Client.get_by_id(self.source_id)
+
+    @property
+    def destination(self):
+        """Returns the destination of the shipment
+
+        Returns:
+            _type_: Client
+        """
+        return Client.get_by_id(self.destination_id)
+
+    @property
+    def package(self):
+        """Returns the package of the shipment
+
+        Returns:
+            _type_: Package
+        """
+        return Package.get_by_id(self.package_id)
 
     def __dict__(self):
-        return {
-            **super().__dict__(),
-            "source": self.source.__dict__(),
-            "destination": self.destination.__dict__(),
-            "price": self.price,
-            "state": self.state,
-            "package": self.package.__dict__(),
-        }
+        return dict(
+            {
+                "id": self.id,
+                "source": self.source.__dict__(),
+                "destination": self.destination.__dict__(),
+                "price": self.price,
+                "state": self.state,
+                "package": self.package.__dict__(),
+                "created_at": self.created_at,
+            }
+        )
+
+    def __iter__(self):
+        for attr in self.__dict__():
+            yield attr
 
     def save(self):
-        shipmets[self.id] = self
+        super().save()
 
     @classmethod
     def get_delivered_by_client(cls, client: Client):
@@ -102,41 +166,40 @@ class Shipment(BaseModel):
             and shipment.state == SHIPMENT_STATES.DELIVERED
         ]
 
+    @classmethod
+    def get_ammount_per_day(cls, date_from: date | str):
+        """Returns the amount collected in a given day
 
-def get_total_shipments():
-    """Returns the total number of shipments
+        Args:
+            date (datetime.date): Date to check
 
-    Returns:
-        _type_: int
-    """
-    return len(
-        [
-            shipment
-            for shipment in shipmets.values()
-            # if shipment.state == SHIPMENT_STATES.DELIVERED
-        ]
-    )
+        Returns:
+            _type_: float
+        """
+        cursor = Connection.cursor()
 
+        cursor.execute(
+            f"""
+                SELECT SUM(price) as total
+                FROM {cls._table_name()}
+                WHERE created_at::date = '{date_from}';
+            """  # type: ignore
+        )
 
-def total_collected_per_day(date: datetime.date | str):
-    """Returns the total amount collected in a given day
+        data = cursor.fetchone()
+        if data:
+            return data[0]
+        else:
+            return 0.0
 
-    Args:
-        date (datetime.date | str): Date to check
+    @classmethod
+    def get_total_shipments_per_day(cls, date_from: date | str):
+        """Returns the total number of shipments
 
-    Returns:
-        _type_: float
-    """
-    if not isinstance(date, datetime.date):
-        try:
-            date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
-        except ValueError:
-            raise ValueError("Invalid date format, must be YYYY-MM-DD")
+        Args:
+            date (datetime.date | str): Date to check
 
-    return sum(
-        [
-            shipment.price
-            for shipment in shipmets.values()
-            if shipment.created_at.date() == date
-        ]
-    )
+        Returns:
+            _type_: int
+        """
+        return Shipment.get_count_by_date(date_from)
