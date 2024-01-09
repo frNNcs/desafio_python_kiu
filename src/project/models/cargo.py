@@ -194,7 +194,10 @@ class Shipment(BaseModel):
 
         data = cursor.fetchone()
         if data:
-            return data[0]
+            if data[0] is not None:
+                return data[0]
+            else:
+                return 0.0
         else:
             return 0.0
 
