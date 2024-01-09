@@ -32,20 +32,24 @@ class TestClient(unittest.TestCase):
 
     def test_client_can_send_package(self):
         """Test that the client can send a package"""
+        client = Client(
+            name="Test Destination",
+            email="12d@21d21d12d",
+            phone="123123123",
+            address="Test Address",
+            is_active=True,
+        )
+        client.save()
+        packa = Package(
+            description="Test package",
+            type_package="Test type",
+            weight=10.0,
+            size=(10, 10, 10),
+        )
+        packa.save()
         shipment = self.client.send_package(
-            destination=Client(
-                name="Test Destination",
-                email="12d@21d21d12d",
-                phone="123123123",
-                address="Test Address",
-                is_active=True,
-            ),
-            package=Package(
-                description="Test package",
-                type_package="Test type",
-                weight=10.0,
-                size=(10, 10, 10),
-            ),
+            destination=client,
+            package=packa,
         )
         self.assertEqual(shipment.state, SHIPMENT_STATES.PICKUP)
 
@@ -94,7 +98,7 @@ class TestClient(unittest.TestCase):
             self.client.__dict__(),
             {
                 "id": self.client.id,
-                "created_at": self.client.created_at.strftime("%d-%m-%Y %H:%M:%S"),
+                "created_at": self.client.created_at,
                 "name": "Test Client",
                 "email": "pablito@asdasd.com",
                 "phone": "123123123",
