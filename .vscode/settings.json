@@ -5,5 +5,24 @@
         "**/*/__init__.py": true,
         "**/*/__pycache__": true,
         "**/*/venv": true,
-    }
+    },
+    "[python]": {
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit"
+        }
+      },
+      "isort.args": ["--profile", "black"],
+      "vsintellicode.python.completionsEnabled": false,
+
+      // File Nesting
+      "explorer.fileNesting.enabled": true,
+      "explorer.fileNesting.expand": false,
+      "explorer.fileNesting.patterns": {
+        "main.py": ".flake8, .gitignore"
+      },
+      "explorer.sortOrder": "filesFirst",
+
 }
