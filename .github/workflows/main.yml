@@ -31,13 +31,6 @@ jobs:
         with:
           python-version: 3.12.1
 
-      - name: Install PostgreSQL client and run psql
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes --no-install-recommends postgresql-client
-          chmod +x init-database.sh
-          ./init-database.sh
-
       - name: Install dependencies
         working-directory: ./src
         run: |
