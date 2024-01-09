@@ -2,16 +2,15 @@ name: Python application
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 permissions:
   contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     services:
@@ -26,29 +25,33 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.12.1
-      uses: actions/setup-python@v3
-      with:
-        python-version: 3.12.1
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.12.1
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.12.1
 
-    - name: Create tables
-      run: ./init-database.sh
+      - name: Install PostgreSQL client and run psql
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends postgresql-client
+          chmod +x init-database.sh
+          ./init-database.sh
 
-    - name: Install dependencies
-      working-directory: ./src
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8 pytest
-        pip install -r requirements/base.txt
+      - name: Install dependencies
+        working-directory: ./src
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          pip install -r requirements/base.txt
 
-    - name: Lint with flake8
-      working-directory: ./src
-      run: |
-        flake8 . --show-source --statistics
+      - name: Lint with flake8
+        working-directory: ./src
+        run: |
+          flake8 . --show-source --statistics
 
-    - name: Test with pytest and coverage
-      working-directory: ./src
-      run: |
-        coverage run -m pytest
-        coverage report -m
+      - name: Test with pytest and coverage
+        working-directory: ./src
+        run: |
+          coverage run -m pytest
+          coverage report -m
