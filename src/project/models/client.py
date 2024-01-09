@@ -71,6 +71,9 @@ class Client(BaseModel):
         if not self.is_active:
             raise Exception("Client is not a valid client.")
 
+        if self == destination:
+            raise Exception("Can't send a package to itself.")
+
         shipment = Shipment(
             source=self,
             destination=destination,

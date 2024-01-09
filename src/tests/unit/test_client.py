@@ -85,7 +85,7 @@ class TestClient(unittest.TestCase):
                     size=(10, 10, 10),
                 ),
             )
-        self.assertTrue("Can't send a package to itself", str(context.exception))
+        self.assertTrue("Can't send a package to itself.", str(context.exception))
 
     def test_get_client_dict(self):
         """Test that the client can be converted to a dict"""
