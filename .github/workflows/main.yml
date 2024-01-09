@@ -32,6 +32,9 @@ jobs:
       with:
         python-version: 3.12.1
 
+    - name: Create tables
+      run: ./init-database.sh
+
     - name: Install dependencies
       working-directory: ./src
       run: |

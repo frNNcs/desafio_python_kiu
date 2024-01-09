@@ -1,14 +1,8 @@
-if __name__ == "__main__":
-    import sys
+#!/bin/bash
+set -e
 
-    print(sys.path)
-    from database.connection import conn
-
-    cur = conn.cursor()
-
-    cur.execute(
-        """
-        CREATE TABLE IF NOT EXISTS clients (
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+    CREATE TABLE clients (
             id serial PRIMARY KEY,
             created_at timestamp,
             name varchar(100) NOT NULL,
@@ -16,7 +10,7 @@ if __name__ == "__main__":
             phone varchar(100) NOT NULL,
             address varchar(100) NOT NULL,
             is_active boolean NOT NULL
-        )
+        );
         CREATE TABLE IF NOT EXISTS packages (
             id serial PRIMARY KEY,
             created_at timestamp,
@@ -24,16 +18,14 @@ if __name__ == "__main__":
             type_package varchar(100) NOT NULL,
             weight float NOT NULL,
             size varchar(100) NOT NULL
-        )
-        CREATE TABLE IF NOT EXISTS shipments (
+        );
+        CREATE TABLE shipments (
             id serial PRIMARY KEY,
             created_at timestamp,
             source_id integer NOT NULL REFERENCES clients(id),
             destination_id integer NOT NULL REFERENCES clients(id),
+            price float NOT NULL,
             state varchar(100) NOT NULL,
-            packages_id integer NOT NULL REFERENCES packages(id),
-        )
-        """
-    )
-
-    conn.commit()
+            package_id integer NOT NULL REFERENCES packages(id)
+        );
+EOSQL
