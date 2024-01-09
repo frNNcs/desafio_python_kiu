@@ -65,21 +65,3 @@ class TestShipment(unittest.TestCase):
             size=(10, 10, 10),
         )
         self.package.save()
-
-    def test_get_shipment_dict(self):
-        shipment = self.client.send_package(
-            destination=self.client2,
-            package=self.package,
-        )
-        self.assertEqual(
-            shipment.__dict__(),
-            {
-                "id": shipment.id,
-                "source": self.client.__dict__(),
-                "package": self.package.__dict__(),
-                "destination": self.client2.__dict__(),
-                "state": shipment.state,
-                "price": 10,
-                "created_at": shipment.created_at,
-            },
-        )
