@@ -23,6 +23,9 @@ class Package(BaseModel):
         self.weight = weight
         self.size = size
 
+    def save(self):
+        super().save()
+
     def __dict__(self):
         return {
             **super().__dict__(),
@@ -37,12 +40,14 @@ class SHIPMENT_STATES:
     """Possible shipment states
     Choices are:
         - PICKUP
+        - IN_TRANSIT
         - DELIVERED
         - RETURNED
         - CANCELED
     """
 
     PICKUP = "Pickup"
+    IN_TRANSIT = "In Transit"
     DELIVERED = "Delivered"
     RETURNED = "Returned"
     CANCELED = "Canceled"
@@ -97,41 +102,41 @@ class Shipment(BaseModel):
             and shipment.state == SHIPMENT_STATES.DELIVERED
         ]
 
-    @classmethod
-    def get_total_shipments(cls):
-        """Returns the total number of shipments
 
-        Returns:
-            _type_: int
-        """
-        return len(
-            [
-                shipment
-                for shipment in shipmets.values()
-                # if shipment.state == SHIPMENT_STATES.DELIVERED
-            ]
-        )
+def get_total_shipments():
+    """Returns the total number of shipments
 
-    @classmethod
-    def total_collected_per_day(cls, date: datetime.date | str):
-        """Returns the total amount collected in a given day
+    Returns:
+        _type_: int
+    """
+    return len(
+        [
+            shipment
+            for shipment in shipmets.values()
+            # if shipment.state == SHIPMENT_STATES.DELIVERED
+        ]
+    )
 
-        Args:
-            date (datetime.date | str): Date to check
 
-        Returns:
-            _type_: float
-        """
-        if not isinstance(date, datetime.date):
-            try:
-                date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
-            except ValueError:
-                raise ValueError("Invalid date format, must be YYYY-MM-DD")
+def total_collected_per_day(date: datetime.date | str):
+    """Returns the total amount collected in a given day
 
-        return sum(
-            [
-                shipment.price
-                for shipment in shipmets.values()
-                if shipment.created_at.date() == date
-            ]
-        )
+    Args:
+        date (datetime.date | str): Date to check
+
+    Returns:
+        _type_: float
+    """
+    if not isinstance(date, datetime.date):
+        try:
+            date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
+        except ValueError:
+            raise ValueError("Invalid date format, must be YYYY-MM-DD")
+
+    return sum(
+        [
+            shipment.price
+            for shipment in shipmets.values()
+            if shipment.created_at.date() == date
+        ]
+    )

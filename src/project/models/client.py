@@ -35,6 +35,16 @@ class Client(BaseModel):
             "is_active": self.is_active,
         }
 
+    def save(self):
+        """Saves the client to the database.
+
+        Raises:
+            Exception: If the client is not active.
+        """
+        if not self.is_active:
+            raise Exception("Client is not a valid client.")
+        super().save()
+
     @property
     def shipments(self):
         """Returns all the shipments delivered the client
@@ -68,3 +78,4 @@ class Client(BaseModel):
             package=package,
         )
         shipment.save()
+        return shipment

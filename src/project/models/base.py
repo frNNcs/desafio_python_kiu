@@ -23,6 +23,10 @@ class BaseModel:
         """
         return str(self._id)
 
+    def save(self):
+        """Saves the model to the database"""
+        pass
+
     def __dict__(self):
         return {
             "id": self.id,
