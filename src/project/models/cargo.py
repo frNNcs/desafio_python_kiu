@@ -167,7 +167,7 @@ class Shipment(BaseModel):
         ]
 
     @classmethod
-    def get_ammount_per_day(cls, date_from: date | str):
+    def get_ammount_per_day(cls, date_field: date | str):
         """Returns the amount collected in a given day
 
         Args:
@@ -176,13 +176,19 @@ class Shipment(BaseModel):
         Returns:
             _type_: float
         """
+        if isinstance(date_field, str):
+            try:
+                date_field = datetime.strptime(date_field, "%Y-%m-%d").date()
+            except AttributeError:
+                raise Exception("Invalid date")
+
         cursor = Connection.cursor()
 
         cursor.execute(
             f"""
                 SELECT SUM(price) as total
                 FROM {cls._table_name()}
-                WHERE created_at::date = '{date_from}';
+                WHERE created_at::date = '{date_field}';
             """  # type: ignore
         )
 
@@ -193,7 +199,7 @@ class Shipment(BaseModel):
             return 0.0
 
     @classmethod
-    def get_total_shipments_per_day(cls, date_from: date | str):
+    def get_total_shipments_per_day(cls, date_field: date | str):
         """Returns the total number of shipments
 
         Args:
@@ -202,4 +208,10 @@ class Shipment(BaseModel):
         Returns:
             _type_: int
         """
-        return Shipment.get_count_by_date(date_from)
+        if isinstance(date_field, str):
+            try:
+                date_field = datetime.strptime(date_field, "%Y-%m-%d").date()
+            except AttributeError:
+                raise Exception("Invalid date")
+
+        return Shipment.get_count_by_date(date_field)

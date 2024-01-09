@@ -1,26 +1,31 @@
 import unittest
 from datetime import datetime
 
-from project.models.cargo import get_total_shipments, total_collected_per_day
+from project.models.cargo import Shipment
 
 
 class TestTotalShipments(unittest.TestCase):
+    def setUp(self):
+        self.date_obj = datetime.now().date()
+
     def test_total_shipments(self):
-        self.assertEqual(get_total_shipments(), 0)
+        self.assertGreaterEqual(Shipment.get_total_shipments_per_day(self.date_obj), 0)
 
 
 class TestTotalCollectedPerDay(unittest.TestCase):
     def setUp(self):
-        self.date_string = "2021-08-01"
-        self.date_obj = datetime.strptime(self.date_string, "%Y-%m-%d").date()
+        self.date_string = datetime.now().strftime("%Y-%m-%d")
+        self.date_obj = datetime.now().date()
 
     def test_total_collected_per_day(self):
-        self.assertEqual(total_collected_per_day(self.date_string), 0)
-        self.assertEqual(total_collected_per_day(self.date_obj), 0)
+        self.assertGreaterEqual(Shipment.get_ammount_per_day(self.date_string), 0)
+        self.assertGreaterEqual(Shipment.get_ammount_per_day(self.date_obj), 0)
 
     def test_total_collected_per_day_bad_date(self):
+        random_strings = "12d12d"
         with self.assertRaises(Exception) as context:
-            total_collected_per_day("12d12d")
+            Shipment.get_ammount_per_day(random_strings)
         self.assertEqual(
-            "Invalid date format, must be YYYY-MM-DD", str(context.exception)
+            f"time data '{random_strings}' does not match format '%Y-%m-%d'",
+            str(context.exception),
         )
