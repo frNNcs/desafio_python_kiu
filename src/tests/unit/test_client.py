@@ -16,6 +16,7 @@ class TestClient(unittest.TestCase):
             address="Test Address",
             is_active=True,
         )
+        self.client.save()
 
     def test_client_has_name(self):
         """Test that the client has a name"""
@@ -85,7 +86,7 @@ class TestClient(unittest.TestCase):
                     size=(10, 10, 10),
                 ),
             )
-        self.assertTrue("Can't send a package to itself.", str(context.exception))
+        self.assertEqual("Can't send a package to itself.", str(context.exception))
 
     def test_get_client_dict(self):
         """Test that the client can be converted to a dict"""
@@ -100,6 +101,21 @@ class TestClient(unittest.TestCase):
                 "address": "Test Address",
                 "is_active": True,
             },
+        )
+
+    def test_canot_create_disabled_client(self):
+        """Test that the client can't be created disabled"""
+        with self.assertRaises(Exception) as context:
+            client = Client(
+                name="Test Client",
+                email="asdasd@asdasd.com",
+                phone="123123123",
+                address="Test Address",
+                is_active=False,
+            )
+            client.save()
+        self.assertEqual(
+            "Can't create a client that is not active.", str(context.exception)
         )
 
 

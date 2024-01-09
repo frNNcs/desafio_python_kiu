@@ -1,6 +1,6 @@
 import unittest
 
-from project.models.cargo import SHIPMENT_STATES, Package, Shipment
+from project.models.cargo import Package
 from project.models.client import Client
 
 
@@ -12,6 +12,7 @@ class TestPackage(unittest.TestCase):
             weight=10.0,
             size=(10, 10, 10),
         )
+        self.package.save()
 
     def test_package_has_description(self):
         self.assertEqual(self.package.description, "Test package")
@@ -72,9 +73,10 @@ class TestShipment(unittest.TestCase):
             {
                 "id": shipment.id,
                 "created_at": shipment.created_at.strftime("%d-%m-%Y %H:%M:%S"),
-                "state": SHIPMENT_STATES.PICKUP,
-                "client": self.client.__dict__(),
+                "source": self.client.__dict__(),
                 "destination": self.client2.__dict__(),
+                "price": 10,
+                "state": shipment.state,
                 "package": self.package.__dict__(),
             },
         )

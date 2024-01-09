@@ -42,7 +42,7 @@ class Client(BaseModel):
             Exception: If the client is not active.
         """
         if not self.is_active:
-            raise Exception("Client is not a valid client.")
+            raise Exception("Can't create a client that is not active.")
         super().save()
 
     @property
