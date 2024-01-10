@@ -77,7 +77,21 @@ class BaseModel:
             obj = cls(**dict(zip(colnames, data)))
             return obj
         else:
-            raise Exception("Model not found")
+            raise Exception(f"{cls.__name__} not found")
+
+    def delete(self):
+        """Deletes the model from the database"""
+        if not hasattr(self, "id"):
+            raise Exception("Model not saved yet")
+
+        cursor = Connection.cursor()
+        cursor.execute(
+            f"""
+                DELETE FROM {self.__class__._table_name()}
+                WHERE id = {self.id};
+            """  # type: ignore
+        )
+        Connection.commit()
 
     @classmethod
     def get_count_by_date(cls, date_field: date | str):

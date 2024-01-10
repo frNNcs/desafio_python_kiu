@@ -122,6 +122,13 @@ class TestClient(unittest.TestCase):
             "Can't create a client that is not active.", str(context.exception)
         )
 
+    def test_can_delete_client(self):
+        """Test that the client can be deleted"""
+        self.client.delete()
+        with self.assertRaises(Exception) as context:
+            Client.get_by_id(self.client.id)  # type: ignore
+        self.assertEqual("Client not found", str(context.exception))
+
 
 if __name__ == "__main__":
     unittest.main()

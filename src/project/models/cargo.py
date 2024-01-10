@@ -10,6 +10,9 @@ shipmets = {}
 class Package(BaseModel):
     """
     Model that represents a package
+
+    Weight is in kilograms and size is in centimeters
+    Weight must be less than 400kg
     """
 
     id: int | None = None
@@ -32,6 +35,17 @@ class Package(BaseModel):
         id: int | None = None,
         created_at: datetime | None = None,
     ):
+        if weight > 400:
+            raise Exception("Package too heavy")
+        if not isinstance(size, tuple):
+            size = size.strip(")(").split(",")
+            size = tuple([int(s) for s in size])
+        if len(size) != 3:
+            raise Exception(f"{size} is an invalid size")
+        else:
+            if (size[0] * size[1] * size[2]) > 1000000:
+                raise Exception("PACKAGE TOO BIG")
+
         self.id = id
         self.description = description
         self.type_package = type_package

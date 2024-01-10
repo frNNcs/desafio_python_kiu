@@ -10,6 +10,7 @@ if __name__ == "__main__":
         is_active=True,
     )
     client.save()
+    # client.delete()
 
     # -------------------------------
     client2 = Client(

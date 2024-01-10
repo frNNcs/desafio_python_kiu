@@ -1,4 +1,18 @@
 {
+    // Workbench & theme
+    "workbench.editor.labelFormat": "short",
+    "workbench.startupEditor": "none",
+    "workbench.tree.indent": 16,
+    "workbench.iconTheme": "catppuccin-mocha",
+    "workbench.preferredDarkColorTheme": "Catppuccin Mocha",
+    "workbench.preferredHighContrastColorTheme": "Catppuccin Mocha",
+    "workbench.preferredHighContrastLightColorTheme": "Catppuccin Mocha",
+    "workbench.preferredLightColorTheme": "Catppuccin Mocha",
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.sideBar.location": "right",
+    "workbench.editor.splitInGroupLayout": "vertical",
+    "workbench.editor.showTabs": "multiple",
+
     "python.analysis.typeCheckingMode": "basic",
     "python.analysis.autoImportCompletions": true,
     "files.exclude": {
