@@ -4,8 +4,6 @@ from project.database.connection import conn as Connection
 from project.models.base import BaseModel
 from project.models.client import Client
 
-shipmets = {}
-
 
 class Package(BaseModel):
     """
@@ -159,6 +157,11 @@ class Shipment(BaseModel):
             }
         )
 
+    def mark_as_delivered(self):
+        """Marks a shipment as delivered"""
+        self.state = SHIPMENT_STATES.DELIVERED
+        self.save()
+
     def __iter__(self):
         for attr in self.__dict__():
             yield attr
@@ -173,12 +176,18 @@ class Shipment(BaseModel):
         Returns:
             _type_: list[Shipment]
         """
-        return [
-            shipment
-            for shipment in shipmets.values()
-            if shipment.source.id == client.id
-            and shipment.state == SHIPMENT_STATES.DELIVERED
-        ]
+        cursor = Connection.cursor()
+        cursor.execute(
+            f"""
+                SELECT * FROM {cls._table_name()}
+                WHERE source_id = {client.id}
+                AND state = '{SHIPMENT_STATES.DELIVERED}';
+            """
+        )
+        shipmets = cursor.fetchall()
+        if shipmets:
+            return [cls(**shipment) for shipment in shipmets]  # type: ignore
+        return []
 
     @classmethod
     def get_ammount_per_day(cls, date_field: date | str):

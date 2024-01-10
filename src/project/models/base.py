@@ -43,6 +43,10 @@ class BaseModel:
         """
 
     def save(self):
+        if hasattr(self, "id"):
+            if self.id:
+                return self.update()
+
         cursor = Connection.cursor()
         query_string = self._insert_str()
         cursor.execute(query_string)  # type: ignore
@@ -52,6 +56,32 @@ class BaseModel:
             self.id = id[0]
         else:
             raise Exception("Error saving the model")
+
+    def update(self):
+        """Updates the model in the database"""
+        if not hasattr(self, "id"):
+            raise Exception("Model not saved yet")
+
+        attrs = []
+        for attr in self.__dict__():
+            if attr in ["id"]:
+                continue
+            if attr in ["source", "destination", "package"]:
+                attr = f"{attr}_id"
+            attrs.append(f"{attr} = '{getattr(self, attr)}'")
+        attrs = ",".join(attrs)
+
+        cursor = Connection.cursor()
+        cursor.execute(
+            f"""
+                UPDATE {self.__class__._table_name()}
+                SET {attrs}
+                WHERE id = {self.id};
+            """  # type: ignore
+        )
+        Connection.commit()
+
+        return self
 
     @classmethod
     def get_by_id(cls, id: int):

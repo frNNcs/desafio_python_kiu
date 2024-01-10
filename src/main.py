@@ -10,6 +10,7 @@ if __name__ == "__main__":
         is_active=True,
     )
     client.save()
+    print(client.shipments)
     # client.delete()
 
     # -------------------------------
@@ -30,10 +31,19 @@ if __name__ == "__main__":
         size=(10, 10, 10),
     )
     package.save()
+
+    # -------------------------------
     shipment = client.send_package(client2, package)
+    print(shipment.state, end="-->")
+    shipment.mark_as_delivered()
+    print(shipment.state)
 
     # -------------------------------
     print(
         Shipment.get_total_shipments_per_day("2024-01-09"),
+        "units",
+    )
+    print(
+        "$",
         Shipment.get_ammount_per_day("2024-01-09"),
     )
