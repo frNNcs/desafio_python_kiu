@@ -1,0 +1,242 @@
+{
+  "name": "extensions",
+  "extensions": [
+    {
+      "identifier": {
+        "id": "catppuccin.catppuccin-vsc",
+        "uuid": "69264e4d-cd3b-468a-8f2b-e69673c7d864"
+      },
+      "displayName": "Catppuccin for VSCode"
+    },
+    {
+      "identifier": {
+        "id": "catppuccin.catppuccin-vsc-icons",
+        "uuid": "625b9abd-dfac-405b-bf34-e65f46e2f22f"
+      },
+      "displayName": "Catppuccin Icons for VSCode"
+    },
+    {
+      "identifier": {
+        "id": "davidrockburn.py-pack",
+        "uuid": "ff281ee8-91a2-4db2-9efa-bd1f7e0de155"
+      },
+      "displayName": "Py Pack"
+    },
+    {
+      "identifier": {
+        "id": "donjayamanne.python-extension-pack",
+        "uuid": "f5188937-53e0-45bb-a16d-61231003fa3b"
+      },
+      "displayName": "Python Extension Pack"
+    },
+    {
+      "identifier": {
+        "id": "editorconfig.editorconfig",
+        "uuid": "f60a60a6-95ba-42d4-b41c-3d24c1b89588"
+      },
+      "displayName": "EditorConfig for VS Code"
+    },
+    {
+      "identifier": {
+        "id": "esbenp.prettier-vscode",
+        "uuid": "96fa4707-6983-4489-b7c5-d5ffdfdcce90"
+      },
+      "displayName": "Prettier - Code formatter"
+    },
+    {
+      "identifier": {
+        "id": "github.vscode-github-actions",
+        "uuid": "04f49bfc-8330-4eee-8237-ea938fb755ef"
+      },
+      "displayName": "GitHub Actions"
+    },
+    {
+      "identifier": {
+        "id": "github.vscode-pull-request-github",
+        "uuid": "69ddd764-339a-4ecc-97c1-9c4ece58e36d"
+      },
+      "displayName": "GitHub Pull Requests and Issues"
+    },
+    {
+      "identifier": {
+        "id": "jaaxxx.multicursor-casepreserve",
+        "uuid": "c61a7722-ac48-4a12-aa02-2a367a02d4ed"
+      },
+      "displayName": "MultiCursor: PascalCase camelCase UPPERCASE all-in-one!"
+    },
+    {
+      "identifier": {
+        "id": "kevinrose.vsc-python-indent",
+        "uuid": "f3cbfb84-b1e1-40ff-b70f-877253461260"
+      },
+      "displayName": "Python Indent"
+    },
+    {
+      "identifier": {
+        "id": "kisstkondoros.vscode-gutter-preview",
+        "uuid": "eedfd044-d5ac-4389-973d-3ac1fdb98ad5"
+      },
+      "displayName": "Image preview"
+    },
+    {
+      "identifier": {
+        "id": "mikestead.dotenv",
+        "uuid": "532533c9-a894-4a58-9eee-bbfbe7c06f71"
+      },
+      "displayName": "DotENV"
+    },
+    {
+      "identifier": {
+        "id": "ms-azuretools.vscode-docker",
+        "uuid": "0479fc1c-3d67-49f9-b087-fb9069afe48f"
+      },
+      "displayName": "Docker"
+    },
+    {
+      "identifier": {
+        "id": "ms-ossdata.vscode-postgresql",
+        "uuid": "cc4e97b3-c252-4e12-983f-ee5d2101c2cd"
+      },
+      "displayName": "PostgreSQL"
+    },
+    {
+      "identifier": {
+        "id": "ms-python.black-formatter",
+        "uuid": "859e640c-c157-47da-8699-9080b81c8371"
+      },
+      "displayName": "Black Formatter"
+    },
+    {
+      "identifier": {
+        "id": "ms-python.isort",
+        "uuid": "4ad0ce32-ff3f-49f0-83b5-93e5dc00cfff"
+      },
+      "displayName": "isort"
+    },
+    {
+      "identifier": {
+        "id": "ms-python.python",
+        "uuid": "f1f59ae4-9318-4f3c-a9b5-81b2eaa5f8a5"
+      },
+      "displayName": "Python"
+    },
+    {
+      "identifier": {
+        "id": "ms-python.vscode-pylance",
+        "uuid": "364d2426-116a-433a-a5d8-a5098dc3afbd"
+      },
+      "displayName": "Pylance"
+    },
+    {
+      "identifier": {
+        "id": "ms-vscode.makefile-tools",
+        "uuid": "e09cf600-90a1-414e-92a0-031f1a5391c6"
+      },
+      "displayName": "Makefile Tools"
+    },
+    {
+      "identifier": {
+        "id": "mtxr.sqltools",
+        "uuid": "6a2bbab0-d8f0-43fa-9b26-e6a3b7892a0b"
+      },
+      "displayName": "SQLTools"
+    },
+    {
+      "identifier": {
+        "id": "mtxr.sqltools-driver-pg",
+        "uuid": "ff850146-c38e-4afe-8a34-705074ae16e2"
+      },
+      "displayName": "SQLTools PostgreSQL/Cockroach Driver"
+    },
+    {
+      "identifier": {
+        "id": "njpwerner.autodocstring",
+        "uuid": "2d6fea35-f68e-461d-9b7b-5cd05be99451"
+      },
+      "displayName": "autoDocstring - Python Docstring Generator"
+    },
+    {
+      "identifier": {
+        "id": "orta.vscode-jest",
+        "uuid": "7997a8ae-1fae-4022-b834-12f6318aeffd"
+      },
+      "displayName": "Jest"
+    },
+    {
+      "identifier": {
+        "id": "pkief.material-icon-theme",
+        "uuid": "5db78037-f674-459f-a236-db622c427c5b"
+      },
+      "displayName": "Material Icon Theme"
+    },
+    {
+      "identifier": {
+        "id": "postman.postman-for-vscode",
+        "uuid": "48fcb244-71c2-4877-aed3-29b36098a411"
+      },
+      "displayName": "Postman"
+    },
+    {
+      "identifier": {
+        "id": "redhat.vscode-yaml",
+        "uuid": "2061917f-f76a-458a-8da9-f162de22b97e"
+      },
+      "displayName": "YAML"
+    },
+    {
+      "identifier": {
+        "id": "shakram02.bash-beautify",
+        "uuid": "3cd12c20-0143-473f-b7f3-0d5f15cb7249"
+      },
+      "displayName": "Bash Beautify"
+    },
+    {
+      "identifier": {
+        "id": "shardulm94.trailing-spaces",
+        "uuid": "6ad45f5a-09ec-44e5-b363-867ddc1ec674"
+      },
+      "displayName": "Trailing Spaces"
+    },
+    {
+      "identifier": {
+        "id": "viablelab.capitalize",
+        "uuid": "ff1b66d2-4288-4551-8aa6-70738bc5e8fe"
+      },
+      "displayName": "Capitalize"
+    },
+    {
+      "identifier": {
+        "id": "visualstudioexptteam.vscodeintellicode",
+        "uuid": "876e8f93-74d0-4f4f-91b7-34a09f19f444"
+      },
+      "displayName": "IntelliCode"
+    },
+    {
+      "identifier": {
+        "id": "wmaurer.change-case",
+        "uuid": "2aa040bf-c73a-455d-8946-5c6cc83b8019"
+      }
+    },
+    {
+      "identifier": {
+        "id": "christian-kohler.path-intellisense",
+        "uuid": "a41c1549-4053-44d4-bf30-60fc809b4a86"
+      },
+      "displayName": "Path Intellisense"
+    },
+    {
+      "identifier": {
+        "id": "dbaeumer.vscode-eslint",
+        "uuid": "583b2b34-2c1e-4634-8c0b-0b82e283ea3a"
+      },
+      "displayName": "ESLint"
+    },
+    {
+      "identifier": {
+        "id": "donjayamanne.python-environment-manager",
+        "uuid": "0c9f60fd-5588-42f7-9176-e80c3ae111ec"
+      },
+      "displayName": "Python Environment Manager"
+    }
+  ]
+}
