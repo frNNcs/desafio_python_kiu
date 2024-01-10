@@ -136,7 +136,7 @@ class BaseModel:
         cursor.execute(
             f"""
                 SELECT COUNT(*) FROM {cls._table_name()}
-                WHERE created_at::date >= '{date_field}';
+                WHERE created_at::date = '{date_field}';
             """  # type: ignore
         )
         data = cursor.fetchone()

@@ -1,4 +1,6 @@
 if __name__ == "__main__":
+    from datetime import datetime
+
     from project.models.cargo import Package, Shipment
     from project.models.client import Client
 
@@ -39,11 +41,12 @@ if __name__ == "__main__":
     print(shipment.state)
 
     # -------------------------------
+    today = datetime.now().strftime("%Y-%m-%d")
     print(
-        Shipment.get_total_shipments_per_day("2024-01-09"),
+        Shipment.get_total_shipments_per_day(today),
         "units",
     )
     print(
         "$",
-        Shipment.get_ammount_per_day("2024-01-09"),
+        Shipment.get_ammount_per_day(today),
     )
